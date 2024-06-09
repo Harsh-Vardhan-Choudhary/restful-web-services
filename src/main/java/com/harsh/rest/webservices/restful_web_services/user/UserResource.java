@@ -1,8 +1,12 @@
 package com.harsh.rest.webservices.restful_web_services.user;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
 import java.net.URI;
 import java.util.*;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,9 +35,16 @@ public class UserResource
 		return service.findAll();
 	}
 
+	//http://localhost:8080/users
+
+	//to make use of HATEOAS-
+	//Entity model
+	//WebMvcLinkBuilder
+
+
 	// GET /users/{id}
 	@GetMapping("/users/{id}")
-	public User retrieveUser(@PathVariable int id) 
+	public EntityModel<User> retrieveUser(@PathVariable int id) 
     {
         User user = service.findOne(id);
 
@@ -43,8 +54,31 @@ public class UserResource
             throw new UserNotFoundException("id"+id);
         }
 
-		return user;
+		EntityModel<User> entityModel = EntityModel.of(user);
+
+		WebMvcLinkBuilder link = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+		entityModel.add(link.withRel("all-users"));
+		
+		return entityModel;
 	}
+
+	// // GET /users/{id}
+	// @GetMapping("/users/{id}")
+	// public User retrieveUser(@PathVariable int id) 
+    // {
+    //     User user = service.findOne(id);
+
+    //     // is user not found UserNotFoundException.class extends RuntimeException -> Error 404 with id 
+    //     if(user == null)
+    //     {
+    //         throw new UserNotFoundException("id"+id);
+    //     }
+
+	// 	return user;
+	// }
+
+	//-------------------------------
+
 
     //we want to send something which has same structure as User
     //That's why the content is passed as user body
