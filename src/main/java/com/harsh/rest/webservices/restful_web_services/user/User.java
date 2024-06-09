@@ -2,6 +2,8 @@ package com.harsh.rest.webservices.restful_web_services.user;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
@@ -11,6 +13,7 @@ public class User
     private Integer id;
 
     @Size(min = 3, message = "Name should atleast have 2 character")
+    @JsonProperty("USER NAME")
     private String name;
 
     @Past(message = "DOB should be in the past")
