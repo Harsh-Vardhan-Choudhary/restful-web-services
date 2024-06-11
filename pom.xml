@@ -53,10 +53,14 @@
 			<version>2.3.0</version>
 		</dependency>
 
+		<!-- Jackson-dataformat-xml intercept with spring sucurity and result in error code 400 for post & put request -->
+
+<!--
 		<dependency>
 			<groupId>com.fasterxml.jackson.dataformat</groupId>
 			<artifactId>jackson-dataformat-xml</artifactId>
 		</dependency>
+-->
 
 				<dependency>
 			<groupId>org.springframework.boot</groupId>
